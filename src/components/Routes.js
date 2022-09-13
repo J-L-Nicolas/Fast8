@@ -7,7 +7,8 @@ import HomeScreen from '../views/Home'
 import MenuScreen  from '../views/Menu'
 
 const Routes = () => {
-
+    
+    //init stack
     const Stack = createNativeStackNavigator();
 
     return (
