@@ -53,7 +53,7 @@ const Game = () => {
                 pan.flattenOffset();
                 afertMove(readMove(gestureState), index)
 
-                colorSelected.setValue(8)
+                // colorSelected.setValue(8)
                 colorSelectedHidde.setValue(0)
               }
             })
@@ -139,11 +139,11 @@ const Game = () => {
         // interpolate aniated
         const boxInterpolation =  colorSelected.interpolate({
             inputRange: [0, 1, 2, 3, 4, 5, 6, 7, 8],
-            outputRange:["#ff0000" , "#ff0000", "#00c210", "#0927ae","#0927ae","#0927ae","#e7eb00", "#ad0bd5", "#ffffff00"]
+            outputRange:["#ff0000" , "#ff0000", "#00c210", "#0927ae","#0927ae","#0927ae","#b86e00", "#ad0bd5", "#ffffff00"]
         })
         const boxInterpolationHidde =  colorSelectedHidde.interpolate({
             inputRange: [0, 1],
-            outputRange:["#ffffff00" , "#ffffff96"]
+            outputRange:["#ffffff00" , "#ffffffbd"]
         })
 
         // render function

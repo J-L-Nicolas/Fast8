@@ -8,7 +8,7 @@ const store = createStore({
         {id: 3, color: "#0927ae", idColor: "blue", active: true},
         {id: 4, color: "#0927ae", idColor: "blue", active: true},
         {id: 5, color: "#0927ae", idColor: "blue", active: true},
-        {id: 6, color: "#e7eb00", idColor: "yellow", active: true},
+        {id: 6, color: "#b86e00", idColor: "yellow", active: true},
         {id: 7, color: "#ad0bd5", idColor: "violet", active: true},
         undefined
     ],
