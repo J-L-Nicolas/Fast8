@@ -1,5 +1,5 @@
 import React, {useState, useRef, useEffect} from 'react'
-import { StyleSheet, View, Text, PanResponder, Animated, Systrace } from 'react-native'
+import { StyleSheet, View, Text, PanResponder, Animated, Vibration } from 'react-native'
 import {useStoreState, useStoreActions} from 'easy-peasy'
 import PlayManager from '../components/PlayManager'
 
@@ -11,6 +11,7 @@ const Game = () => {
     //init state 
     const [cubeTable, setcubeTable] = useState(tableCubes)
     const [refTable, setrefTable] = useState(PlayManager.generateTabAlt(4, cubeTable))
+    const [dataInfos, setdataInfos] = useState({score: 0, move: 0, oldMoves: []})
 
     //init ref
     const layoutInfos = useRef(null)
@@ -123,17 +124,35 @@ const Game = () => {
         newTable[indexOut] = save
 
         setcubeTable(newTable)
+        updateScore(0)
+
     }
 
     // init effect
     useEffect(() => {
       const result = PlayManager.comparTabs(cubeTable, refTable, "idColor")
       if (result) {
+        updateScore(1)
         setrefTable(PlayManager.generateTabAlt(3+PlayManager.getRandomInt(4), cubeTable))
+        Vibration.vibrate(50)
       }
     }, [cubeTable])
-    
 
+    const updateScore = (id) =>{
+        let mewData = {...dataInfos};
+        if (id == 0){
+            mewData.move += 1
+        }else{
+            mewData.score += 1
+            mewData.oldMoves = [mewData.move , ...mewData.oldMoves]
+            if(mewData.oldMoves.length > 4){
+                mewData.oldMoves.pop()
+            }
+            mewData.move = 0
+        }
+        setdataInfos(mewData)
+    }
+    
     // display table
     const DisplayTable = () => {
 
@@ -198,6 +217,21 @@ const Game = () => {
             </View>
         )
     }
+
+    //display box infos
+    const DisplayInfos = ({infos}) => {
+        return(
+            <View style={styles.boxInfos}>
+                <Text>Scrore: {infos.score}</Text>
+                <Text>Move: {infos.move}</Text>
+                <View style={styles.oldList}>
+                    {infos.oldMoves.map((move, index)=>
+                        <Text key={index}>➜ {move}</Text>
+                    )}
+                </View>
+            </View>
+        )
+    }
     
     // Render
     return (
@@ -205,6 +239,7 @@ const Game = () => {
             <Text>Game</Text>
             <DisplayTableRef/>
             <DisplayTable/>
+            <DisplayInfos infos={dataInfos}/>
         </View>
     )
 
@@ -251,5 +286,18 @@ const styles = StyleSheet.create({
         width: 30,
         height: 30,
         borderRadius: 30,
+    },
+    boxInfos:{
+        flex:1,
+        width: "100%",
+        marginTop: 10,
+        paddingHorizontal: 20,
+        justifyContent: 'flex-start',
+    },
+    oldList:{
+        backgroundColor: "#fff",
+        elevation: 1,
+        borderRadius: 7,
+        padding: 5,
     }
 })
