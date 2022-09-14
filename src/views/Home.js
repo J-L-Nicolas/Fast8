@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Text, Button} from 'react-native'
+import { View, Image} from 'react-native'
 import { useNavigation } from '@react-navigation/native';
 import {useStoreState, useStoreActions} from 'easy-peasy'
 
@@ -8,21 +8,23 @@ const Home = () => {
     // init navigation
     const navigation = useNavigation();
 
-    // init store
-    const count = useStoreState((state) => state.count);
-    const plusCount = useStoreActions((actions) => actions.plusCount);
+    // got next page
+    const nextPage = () =>{
+      setTimeout(()=>{
+        // navigation.navigate('Menu')
+        navigation.reset({
+          index: 0,
+          routes: [{ name: 'Menu' }]
+        })
+      },2000)
+    }
+    nextPage()
 
   return (
-    <View>
-      <Text>Home</Text>
-      <Text>value: {count}</Text>
-      <Button
-        title='Next view'
-        onPress={()=>{navigation.navigate('Menu')}}
-      />
-      <Button
-        title='Incre'
-        onPress={plusCount}
+    <View style={{flex: 1, backgroundColor: "#ffffff"}}>
+      <Image
+        source={require("../assets/img/loading.gif")}
+        style={{width: "100%" }}
       />
     </View>
   )
