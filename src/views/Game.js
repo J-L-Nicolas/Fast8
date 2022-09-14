@@ -1,7 +1,7 @@
-import React, {useState, useRef} from 'react'
-import { StyleSheet, View, Text, PanResponder, Animated } from 'react-native'
+import React, {useState, useRef, useEffect} from 'react'
+import { StyleSheet, View, Text, PanResponder, Animated, Systrace } from 'react-native'
 import {useStoreState, useStoreActions} from 'easy-peasy'
-// import PlayManager from '../components/PlayManager'
+import PlayManager from '../components/PlayManager'
 
 const Game = () => {
 
@@ -10,6 +10,7 @@ const Game = () => {
     
     //init state 
     const [cubeTable, setcubeTable] = useState(tableCubes)
+    const [refTable, setrefTable] = useState(PlayManager.generateTabAlt(4, cubeTable))
 
     //init ref
     const layoutInfos = useRef(null)
@@ -33,6 +34,7 @@ const Game = () => {
                     });
                     colorSelected.setValue(cubeTable[index].id)
                     colorSelectedHidde.setValue(1)
+                    return true
                 },
               onMoveShouldSetPanResponder: () => true,
               onPanResponderGrant: () => {
@@ -52,15 +54,6 @@ const Game = () => {
                 pan.flattenOffset();
                 afertMove(readMove(gestureState), index)
 
-                pan.setValue({
-                    x: -100,
-                    y: -100
-                });
-                pan2.setValue({
-                    x: -100,
-                    y: -100
-                });
-
                 colorSelected.setValue(8)
                 colorSelectedHidde.setValue(0)
               }
@@ -70,6 +63,14 @@ const Game = () => {
     }
 
     const readMove = (gestureState) => {
+        pan.setValue({
+            x: -100,
+            y: -100
+        });
+        pan2.setValue({
+            x: -100,
+            y: -100
+        });
         if( gestureState.dx > (layoutInfos.current.width * 0.6) && gestureState.dy < (layoutInfos.current.width * 0.5) && gestureState.dy > (layoutInfos.current.width * -0.5)){
             return "right"
         }
@@ -124,17 +125,26 @@ const Game = () => {
         setcubeTable(newTable)
     }
 
+    // init effect
+    useEffect(() => {
+      const result = PlayManager.comparTabs(cubeTable, refTable, "idColor")
+      if (result) {
+        setrefTable(PlayManager.generateTabAlt(3+PlayManager.getRandomInt(4), cubeTable))
+      }
+    }, [cubeTable])
+    
+
     // display table
     const DisplayTable = () => {
 
         // interpolate aniated
         const boxInterpolation =  colorSelected.interpolate({
             inputRange: [0, 1, 2, 3, 4, 5, 6, 7, 8],
-            outputRange:["#ff0000" , "#ff0000", "#00c210", "#0927ae","#0927ae","#0927ae","#e7eb00", "#ad0bd5", "#ffffff00"]
+            outputRange:["#ff0000" , "#ff0000", "#00c210", "#0927ae","#0927ae","#0927ae","#b86e00", "#ad0bd5", "#ffffff00"]
         })
         const boxInterpolationHidde =  colorSelectedHidde.interpolate({
             inputRange: [0, 1],
-            outputRange:["#ffffff00" , "#ffffff96"]
+            outputRange:["#ffffff00" , "#ffffffbd"]
         })
 
         // render function
@@ -168,12 +178,33 @@ const Game = () => {
             </View>
         )
     }
+
+    // display table ref
+    const DisplayTableRef = () =>{
+        return(
+            <View style={styles.refContainer}>
+                {refTable.map((item, index) => 
+                    item ?
+                    <View
+                        key={index}
+                        style={[styles.refElement, {backgroundColor: item.color}]}
+                    />
+                    :
+                    <View
+                        key={index}
+                        style={[styles.refElement, {backgroundColor: "#ccc"}]}
+                    />
+                )}
+            </View>
+        )
+    }
     
     // Render
     return (
         <View style={styles.container}>
-        <Text>Game</Text>
-        <DisplayTable/>
+            <Text>Game</Text>
+            <DisplayTableRef/>
+            <DisplayTable/>
         </View>
     )
 
@@ -209,5 +240,16 @@ const styles = StyleSheet.create({
         width: 100,
         height: 100,
         position: 'absolute'
+    },
+    refContainer:{
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+        width: 100,
+        height: 100,
+    },
+    refElement:{
+        width: 30,
+        height: 30,
+        borderRadius: 30,
     }
 })
