@@ -1,5 +1,5 @@
 import React, {useState, useRef, useEffect} from 'react'
-import { StyleSheet, View, Text, PanResponder, Animated, Systrace } from 'react-native'
+import { StyleSheet, View, Text, PanResponder, Animated, Vibration } from 'react-native'
 import {useStoreState, useStoreActions} from 'easy-peasy'
 import PlayManager from '../components/PlayManager'
 
@@ -134,6 +134,7 @@ const Game = () => {
       if (result) {
         updateScore(1)
         setrefTable(PlayManager.generateTabAlt(3+PlayManager.getRandomInt(4), cubeTable))
+        Vibration.vibrate(50)
       }
     }, [cubeTable])
 
