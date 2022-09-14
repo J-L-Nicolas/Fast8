@@ -34,6 +34,7 @@ const Game = () => {
                     });
                     colorSelected.setValue(cubeTable[index].id)
                     colorSelectedHidde.setValue(1)
+                    return true
                 },
               onMoveShouldSetPanResponder: () => true,
               onPanResponderGrant: () => {
@@ -53,7 +54,7 @@ const Game = () => {
                 pan.flattenOffset();
                 afertMove(readMove(gestureState), index)
 
-                // colorSelected.setValue(8)
+                colorSelected.setValue(8)
                 colorSelectedHidde.setValue(0)
               }
             })
