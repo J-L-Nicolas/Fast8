@@ -20,7 +20,7 @@ const Menu = () => {
     <View style={styles.container}>
       <Image
         source={require("../assets/img/title_0.png")}
-        style={{width: "100%", height: 100}}
+        style={{width: "90%", height: 90}}
       />
       <View style={styles.containerMenu}>
         <TouchableOpacity 
@@ -42,6 +42,10 @@ const Menu = () => {
         <TouchableOpacity style={styles.itemMenu} onPress={()=>BackHandler.exitApp()}>
           <Text style={styles.itemMenuTitle}>Exit</Text>
         </TouchableOpacity>
+        <Image
+          source={require("../assets/img/bottom_0.png")}
+          style={{width: "100%"}}
+        />
       </View>
     </View>
   )
@@ -65,7 +69,13 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems:'center',
     width:"100%",
-    backgroundColor: "#515ba1"
+    backgroundColor: "#515ba1",
+    borderWidth: 10,
+    borderColor: "#373e6d",
+    borderBottomWidth: 0,
+    borderTopEndRadius: 55,
+    borderTopStartRadius: 55,
+    marginTop: 40,
   },
   itemMenuG:{
     width: "80%",
