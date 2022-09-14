@@ -5,6 +5,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 // import views
 import HomeScreen from '../views/Home'
 import MenuScreen  from '../views/Menu'
+import GameScreen from '../views/Game'
 
 const Routes = () => {
     
@@ -13,10 +14,11 @@ const Routes = () => {
 
     return (
         <NavigationContainer>
-        <Stack.Navigator>
-            <Stack.Screen name="Home" component={HomeScreen} />
-            <Stack.Screen name="Menu" component={MenuScreen} />
-        </Stack.Navigator>
+            <Stack.Navigator screenOptions={{headerShown: false}}>
+                <Stack.Screen name="Game" component={GameScreen} />
+                <Stack.Screen name="Home" component={HomeScreen} />
+                <Stack.Screen name="Menu" component={MenuScreen} />
+            </Stack.Navigator>
         </NavigationContainer>
     )
 }
