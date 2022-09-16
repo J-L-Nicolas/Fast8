@@ -1,8 +1,8 @@
 import React, {useState, useRef, useEffect} from 'react'
-import { StyleSheet, View, Text, PanResponder, Animated, Vibration, TouchableOpacity } from 'react-native'
+import { StyleSheet, View, Text, PanResponder, Animated, Vibration, TouchableOpacity, Image } from 'react-native'
 import {useStoreState, useStoreActions} from 'easy-peasy'
 import PlayManager from '../components/PlayManager'
-import { transform } from '@babel/core'
+import { Shadow } from 'react-native-shadow-2';
 
 const Game = () => {
 
@@ -172,7 +172,7 @@ const Game = () => {
         })
         const boxInterpolationHidde =  colorSelectedHidde.interpolate({
             inputRange: [0, 1],
-            outputRange:["#ffffff00" , "#ffffffbd"]
+            outputRange:["#ffffff00" , "#515ba1"]
         })
 
         // render function
@@ -194,7 +194,7 @@ const Game = () => {
                          {...panMove(index).panHandlers} 
                     />
                     :
-                    <View style={[styles.cube, {backgroundColor: "#ffffff11"}]} key={index}/>
+                    <View style={[styles.cube, {backgroundColor: "#ffffff00"}]} key={index}/>
                 )}
                 <Animated.View
                     style={[ styles.cubeHidde, {backgroundColor: boxInterpolationHidde,top: pan2.y , left: pan2.x} ]}
@@ -219,7 +219,7 @@ const Game = () => {
                     :
                     <View
                         key={index}
-                        style={[styles.refElement, {backgroundColor: "#ccc"}]}
+                        style={[styles.refElement, {backgroundColor: "#aaaa"}]}
                     />
                 )}
             </View>
@@ -230,11 +230,13 @@ const Game = () => {
     const DisplayInfos = ({infos}) => {
         return(
             <View style={styles.boxInfos}>
-                <Text>Scrore: {infos.score}</Text>
-                <Text>Move: {infos.move}</Text>
+                <View style={styles.inBoxInfos}>
+                    <Text style={styles.textInfos}>Score: {infos.score}</Text>
+                    <Text style={styles.textInfos}>Move: {infos.move}</Text>
+                </View>
                 <View style={styles.oldList}>
                     {infos.oldMoves.map((move, index)=>
-                        <Text key={index}>➜ {move}</Text>
+                        <Text key={index}>➜ {move} - {move < 10 ? "★★★" : move < 20 ? "★★" : "★" } </Text>
                     )}
                 </View>
             </View>
@@ -288,8 +290,8 @@ const Game = () => {
                     <Animated.View style={[styles.snapBull, {backgroundColor: endBottomInterpolate}]} onStartShouldSetResponderCapture={()=> changeSnap({n: 100, level: 7})} />
                 </View>
                 <View style={styles.snapBoxText}>
-                    <Animated.Text style={[styles.snapText, {fontWeight: snapTextStartInterpolate}]}>Esay</Animated.Text>
-                    <Animated.Text style={[styles.snapText, {fontWeight: snapTextMiddletInterpolate}]}>midium</Animated.Text>
+                    <Animated.Text style={[styles.snapText, {fontWeight: snapTextStartInterpolate}]}>Easy</Animated.Text>
+                    <Animated.Text style={[styles.snapText, {fontWeight: snapTextMiddletInterpolate}]}>medium</Animated.Text>
                     <Animated.Text style={[styles.snapText, {fontWeight: snapTextEndInterpolate}]}>Hard</Animated.Text>
 
                 </View>
@@ -304,7 +306,9 @@ const Game = () => {
                 onPress={updateRef}
                 style={styles.btnReloadRef}
             >
-                <Text style={styles.textbtnReloadRef}>Reload Ref</Text>
+                <Image style={styles.imgReloadIcon}
+                    source={require("../assets/img/reload_icon.png")}
+                />
             </TouchableOpacity>
         )
     }
@@ -312,12 +316,21 @@ const Game = () => {
     // Render
     return (
         <View style={styles.container}>
-            <Text>Game</Text>
-            <DisplayTableRef/>
-            <DisplayTable/>
-            <DisplaySnapSlider/>
-            <DisplayBtnReloadRef />
-            <DisplayInfos infos={dataInfos}/>
+            <Image 
+                source={require("../assets/img/border_cover.png")}
+                style={{ resizeMode: "contain", height: "100%", position: 'absolute', top: 0}}
+            />
+            <View style={styles.containerHeader}>
+                    <View style={styles.boxInHeader}>
+                        <DisplayTableRef/>
+                        <DisplayBtnReloadRef />
+                    </View>
+                    <DisplaySnapSlider/>
+            </View>
+                <View style={styles.containerBody}>
+                <DisplayTable/>
+                <DisplayInfos infos={dataInfos}/>
+            </View>
         </View>
     )
 
@@ -327,10 +340,50 @@ export default Game
 
 //Style
 const styles = StyleSheet.create({
+    // style in game component
     container:{
         flex: 1,
-        alignItems: "center"
+        alignItems: "center",
+        backgroundColor: "#383e6e",
+        paddingHorizontal: 10,
     },
+    shadowContainerHeader:{
+        width: "100%",
+        borderRadius: 30,
+        padding: 10,
+    },
+    containerHeader:{
+        width: "100%",
+        padding: 10,
+        backgroundColor: "#515ba1cc",
+        borderRadius: 30,
+        marginTop: 30,
+    },
+    boxInHeader: {
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+        alignItems: 'center',
+    },
+    containerBody:{
+        width: "100%",
+        padding: 20,
+        backgroundColor: "#515ba1",
+        borderRadius: 30,
+        marginTop: 20,
+        justifyContent: 'center',
+        alignItems:'center',
+        paddingTop: 25,
+    },
+    shadowContainerbody:{
+        marginTop: 30,
+        width: "100%",
+        padding: 20,
+        borderRadius: 20,
+        justifyContent: 'center',
+        alignItems:'center',
+        
+    },
+    //stye ---------
     containerCube:{
         position:'relative',
         width: 315,
@@ -366,11 +419,18 @@ const styles = StyleSheet.create({
         borderRadius: 30,
     },
     boxInfos:{
-        flex:1,
         width: "100%",
         marginTop: 10,
         paddingHorizontal: 20,
         justifyContent: 'flex-start',
+    },
+    inBoxInfos:{
+        flexDirection: 'row',  
+        justifyContent:'space-between'  
+    },
+    textInfos:{
+        color: "#fff",
+        fontSize: 20,
     },
     oldList:{
         backgroundColor: "#fff",
@@ -414,14 +474,18 @@ const styles = StyleSheet.create({
     },
     snapText:{
         fontWeight: '900',
+        color:"#fff",
     },
     btnReloadRef: {
-        height: 40,
-        paddingHorizontal: 40,
-        backgroundColor: "#552"
+        height: 60,
+        padding: 10,
+        backgroundColor: "#6c00d1bd",
+        borderRadius: 40,
     },
-    textbtnReloadRef: {
-        color: "#fff",
+    imgReloadIcon: {
+        resizeMode: "contain",
+        width: 40,
+        height: 40,
     }
 
 })
