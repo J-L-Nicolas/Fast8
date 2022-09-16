@@ -1,7 +1,8 @@
 import React, {useState, useRef, useEffect} from 'react'
-import { StyleSheet, View, Text, PanResponder, Animated, Vibration } from 'react-native'
+import { StyleSheet, View, Text, PanResponder, Animated, Vibration, TouchableOpacity } from 'react-native'
 import {useStoreState, useStoreActions} from 'easy-peasy'
 import PlayManager from '../components/PlayManager'
+import { transform } from '@babel/core'
 
 const Game = () => {
 
@@ -10,7 +11,7 @@ const Game = () => {
     
     //init state 
     const [cubeTable, setcubeTable] = useState(tableCubes)
-    const [refTable, setrefTable] = useState(PlayManager.generateTabAlt(4, cubeTable))
+    const [refTable, setrefTable] = useState(PlayManager.generateTabAlt(3, cubeTable))
     const [dataInfos, setdataInfos] = useState({score: 0, move: 0, oldMoves: []})
 
     //init ref
@@ -20,6 +21,8 @@ const Game = () => {
     const pan2 = useRef(new Animated.ValueXY()).current;
     const colorSelected = useRef(new Animated.Value(8)).current
     const colorSelectedHidde = useRef(new Animated.Value(0)).current
+    const slideSnapBar = useRef(new Animated.Value(0)).current
+    const levelPoint = useRef(2)
 
     const panMove = (index) =>{
         const panResponder = useRef(
@@ -128,12 +131,18 @@ const Game = () => {
 
     }
 
+    //updateRef
+    const updateRef = () => {
+        const newValue = levelPoint.current + PlayManager.getRandomInt(3)
+        setrefTable(PlayManager.generateTabAlt(newValue, cubeTable))
+    }
+
     // init effect
     useEffect(() => {
       const result = PlayManager.comparTabs(cubeTable, refTable, "idColor")
       if (result) {
         updateScore(1)
-        setrefTable(PlayManager.generateTabAlt(3+PlayManager.getRandomInt(4), cubeTable))
+        updateRef()
         Vibration.vibrate(50)
       }
     }, [cubeTable])
@@ -187,13 +196,12 @@ const Game = () => {
                     :
                     <View style={[styles.cube, {backgroundColor: "#ffffff11"}]} key={index}/>
                 )}
-                <Animated.View 
+                <Animated.View
                     style={[ styles.cubeHidde, {backgroundColor: boxInterpolationHidde,top: pan2.y , left: pan2.x} ]}
                 />
-                <Animated.View 
+                <Animated.View
                     style={[ styles.cubeMove, {backgroundColor: boxInterpolation,top: pan.y , left: pan.x} ]}
                 />
-                
             </View>
         )
     }
@@ -232,6 +240,74 @@ const Game = () => {
             </View>
         )
     }
+
+    // change bar animate
+    const changeSnap = (data) =>{
+        Animated.timing(slideSnapBar, {
+            toValue: data.n,
+            duration: 500,
+            useNativeDriver: false
+        }).start();
+        levelPoint.current = data.level
+    }
+
+    //display sliderSnap
+    const DisplaySnapSlider = () =>{
+        const SlideInterpolate =  slideSnapBar.interpolate({
+            inputRange: [0, 100],
+            outputRange:["0%" , "100%"]
+        })
+        const middleBottomInterpolate =  slideSnapBar.interpolate({
+            inputRange: [0, 50],
+            outputRange:["#777" , "#00f"]
+        })
+        const endBottomInterpolate =  slideSnapBar.interpolate({
+            inputRange: [0 ,50, 100],
+            outputRange:["#777", "#777" , "#00f"]
+        })
+        const snapTextStartInterpolate =  slideSnapBar.interpolate({
+            inputRange: [0 ,50, 100],
+            outputRange:["900", "300" , "300"]
+        })
+        const snapTextMiddletInterpolate =  slideSnapBar.interpolate({
+            inputRange: [0 ,50, 100],
+            outputRange:["300", "900" , "300"]
+        })
+        const snapTextEndInterpolate =  slideSnapBar.interpolate({
+            inputRange: [0 ,50, 100],
+            outputRange:["300", "300" , "900"]
+        })
+        return(
+            <View style={styles.containerSnap}>
+                <View style={styles.containerLines}>
+                    <View style={styles.snapBacklLine}>
+                        <Animated.View style={[styles.snapLine, {width: SlideInterpolate}]} />
+                    </View>
+                    <Animated.View style={styles.snapBull} onStartShouldSetResponderCapture={()=> changeSnap({n: 0, level: 2})} />
+                    <Animated.View style={[styles.snapBull, {backgroundColor: middleBottomInterpolate}]} onStartShouldSetResponderCapture={()=> changeSnap({n: 50, level:4})} />
+                    <Animated.View style={[styles.snapBull, {backgroundColor: endBottomInterpolate}]} onStartShouldSetResponderCapture={()=> changeSnap({n: 100, level: 7})} />
+                </View>
+                <View style={styles.snapBoxText}>
+                    <Animated.Text style={[styles.snapText, {fontWeight: snapTextStartInterpolate}]}>Esay</Animated.Text>
+                    <Animated.Text style={[styles.snapText, {fontWeight: snapTextMiddletInterpolate}]}>midium</Animated.Text>
+                    <Animated.Text style={[styles.snapText, {fontWeight: snapTextEndInterpolate}]}>Hard</Animated.Text>
+
+                </View>
+            </View>
+        )
+    }
+
+    const DisplayBtnReloadRef = () =>{
+
+        return(
+            <TouchableOpacity 
+                onPress={updateRef}
+                style={styles.btnReloadRef}
+            >
+                <Text style={styles.textbtnReloadRef}>Reload Ref</Text>
+            </TouchableOpacity>
+        )
+    }
     
     // Render
     return (
@@ -239,6 +315,8 @@ const Game = () => {
             <Text>Game</Text>
             <DisplayTableRef/>
             <DisplayTable/>
+            <DisplaySnapSlider/>
+            <DisplayBtnReloadRef />
             <DisplayInfos infos={dataInfos}/>
         </View>
     )
@@ -299,5 +377,51 @@ const styles = StyleSheet.create({
         elevation: 1,
         borderRadius: 7,
         padding: 5,
+    },
+    containerSnap:{
+        width: "100%",
+        paddingVertical: 10,
+        paddingHorizontal: 15,
+    },
+    snapBull:{
+        width: 30,
+        height: 30,
+        backgroundColor: "#00f",
+        borderRadius: 15,
+    },
+    containerLines:{
+        width:"100%",
+        position: 'relative',
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent:"space-between"
+
+    },
+    snapBacklLine:{
+        position:"absolute",
+        backgroundColor: "#777",
+        width: "100%",
+        height: 10,
+        transform: [{scaleX: 0.90}]
+    },
+    snapLine:{
+        backgroundColor: "#55f",
+        height: "100%",
+    },
+    snapBoxText:{
+        flexDirection: "row",
+        justifyContent: "space-between",
+    },
+    snapText:{
+        fontWeight: '900',
+    },
+    btnReloadRef: {
+        height: 40,
+        paddingHorizontal: 40,
+        backgroundColor: "#552"
+    },
+    textbtnReloadRef: {
+        color: "#fff",
     }
+
 })
