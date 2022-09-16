@@ -20,7 +20,7 @@ const Menu = () => {
     <View style={styles.container}>
       <Image
         source={require("../assets/img/title_0.png")}
-        style={{width: "90%", height: 90}}
+        style={styles.imageTitle}
       />
       <View style={styles.containerMenu}>
         <TouchableOpacity 
@@ -56,13 +56,14 @@ export default Menu
 //Style
 const styles = StyleSheet.create({
   container:{
-      flex: 1,
+    flex: 1,
       alignItems: "center",
       backgroundColor: "#515ba1",
       paddingTop: 40,
   },
   imageTitle:{
-    width: "100%", 
+    resizeMode: "contain",
+    width: "90%", 
     height: 100,
   },
   containerMenu:{
@@ -71,10 +72,10 @@ const styles = StyleSheet.create({
     width:"100%",
     backgroundColor: "#515ba1",
     borderWidth: 10,
-    borderColor: "#373e6d",
     borderBottomWidth: 0,
     borderTopEndRadius: 55,
     borderTopStartRadius: 55,
+    borderColor: "#373e6d",
     marginTop: 40,
   },
   itemMenuG:{
