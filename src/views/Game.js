@@ -348,17 +348,12 @@ const styles = StyleSheet.create({
         backgroundColor: "#383e6e",
         paddingHorizontal: 10,
     },
-    shadowContainerHeader:{
-        width: "100%",
-        borderRadius: 30,
-        padding: 10,
-    },
     containerHeader:{
         width: "100%",
         padding: 10,
         backgroundColor: "#515ba1cc",
         borderRadius: 30,
-        marginTop: 30,
+        marginTop: 50,
     },
     boxInHeader: {
         flexDirection: 'row',
@@ -374,15 +369,6 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems:'center',
         paddingTop: 25,
-    },
-    shadowContainerbody:{
-        marginTop: 30,
-        width: "100%",
-        padding: 20,
-        borderRadius: 20,
-        justifyContent: 'center',
-        alignItems:'center',
-        
     },
     //stye ---------
     containerCube:{
