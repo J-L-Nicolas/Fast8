@@ -1,8 +1,7 @@
 import React, {useState, useRef, useEffect} from 'react'
 import { StyleSheet, View, Text, PanResponder, Animated, Vibration, TouchableOpacity, Image } from 'react-native'
-import {useStoreState, useStoreActions} from 'easy-peasy'
+import {useStoreState} from 'easy-peasy'
 import PlayManager from '../components/PlayManager'
-import { Shadow } from 'react-native-shadow-2';
 
 const Game = () => {
 
@@ -233,9 +232,10 @@ const Game = () => {
             <View style={styles.boxInfos}>
                 <View style={styles.inBoxInfos}>
                     <Text style={styles.textInfos}>Score: {infos.score}</Text>
-                    <Text style={styles.textInfos}>Move: {infos.move}</Text>
+                    <Text style={styles.textInfos}>Moves: {infos.move}</Text>
                 </View>
                 <View style={styles.oldList}>
+                    {infos.oldMoves.length > 0 && <Text style={styles.titleOldList}>Old Movements:</Text>}
                     {infos.oldMoves.map((move, index)=>
                         <Text key={index}>➜ {move} - {move < 10 ? "★★★" : move < 20 ? "★★" : "★" } </Text>
                     )}
@@ -435,9 +435,14 @@ const styles = StyleSheet.create({
     },
     oldList:{
         backgroundColor: "#fff",
-        elevation: 1,
+        elevation: 4,
         borderRadius: 7,
         padding: 5,
+    },
+    titleOldList:{
+        fontWeight:  'bold',
+        fontSize: 15,
+        textAlign: 'center',
     },
     containerSnap:{
         width: "100%",
@@ -449,6 +454,7 @@ const styles = StyleSheet.create({
         height: 30,
         backgroundColor: "#00f",
         borderRadius: 15,
+        elevation: 2,
     },
     containerLines:{
         width:"100%",
