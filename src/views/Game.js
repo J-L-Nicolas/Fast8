@@ -132,9 +132,10 @@ const Game = () => {
     }
 
     //updateRef
-    const updateRef = () => {
+    const updateRef = (type = false) => {
         const newValue = levelPoint.current + PlayManager.getRandomInt(3)
         setrefTable(PlayManager.generateTabAlt(newValue, cubeTable))
+        type && setdataInfos({...dataInfos, move: 0})
     }
 
     // init effect
@@ -303,7 +304,7 @@ const Game = () => {
 
         return(
             <TouchableOpacity 
-                onPress={updateRef}
+                onPress={()=>updateRef(true)}
                 style={styles.btnReloadRef}
             >
                 <Image style={styles.imgReloadIcon}
