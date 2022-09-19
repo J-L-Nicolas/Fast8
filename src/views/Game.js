@@ -1,5 +1,5 @@
 import React, {useState, useRef, useEffect} from 'react'
-import { StyleSheet, View, Vibration, Image, Text } from 'react-native'
+import { StyleSheet, View, Vibration, Image } from 'react-native'
 import {useStoreState} from 'easy-peasy'
 import PlayManager from '../components/PlayManager'
 
@@ -79,7 +79,6 @@ const Game = () => {
                 </View>
                 <SnapSlider snapValue={changeSnap}/>
             </View>
-            <Text>dataInfos: {scoreInfo} {moveInfo} {oldMovesInfo.length}</Text>
             <View style={styles.containerBody}>
                 <GameGrid key={cubeTable} tableGame={cubeTable} changeTableGame={setcubeTable} />
                 <Infos infos={dataInfos}/>
