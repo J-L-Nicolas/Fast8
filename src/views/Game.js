@@ -1,12 +1,12 @@
 import React, {useState, useRef, useEffect} from 'react'
-import { StyleSheet, View, Text, PanResponder, Animated, Vibration, Image } from 'react-native'
+import { StyleSheet, View, PanResponder, Animated, Vibration, Image } from 'react-native'
 import {useStoreState} from 'easy-peasy'
 import PlayManager from '../components/PlayManager'
 
 // import components
 import BtnReloadRef from '../components/game_components/BtnReloadRef'
 import Infos from '../components/game_components/Infos'
-
+import SnapSlider from '../components/game_components/SnapSlider'
 
 const Game = () => {
 
@@ -25,7 +25,6 @@ const Game = () => {
     const pan2 = useRef(new Animated.ValueXY()).current;
     const colorSelected = useRef(new Animated.Value(8)).current
     const colorSelectedHidde = useRef(new Animated.Value(0)).current
-    const slideSnapBar = useRef(new Animated.Value(0)).current
     const levelPoint = useRef(2)
 
     const panMove = (index) =>{
@@ -232,59 +231,8 @@ const Game = () => {
     }
 
     // change bar animate
-    const changeSnap = (data) =>{
-        Animated.timing(slideSnapBar, {
-            toValue: data.n,
-            duration: 500,
-            useNativeDriver: false
-        }).start();
-        levelPoint.current = data.level
-    }
-
-    //display sliderSnap
-    const DisplaySnapSlider = () =>{
-        const SlideInterpolate =  slideSnapBar.interpolate({
-            inputRange: [0, 100],
-            outputRange:["0%" , "100%"]
-        })
-        const middleBottomInterpolate =  slideSnapBar.interpolate({
-            inputRange: [0, 50],
-            outputRange:["#777" , "#00f"]
-        })
-        const endBottomInterpolate =  slideSnapBar.interpolate({
-            inputRange: [0 ,50, 100],
-            outputRange:["#777", "#777" , "#00f"]
-        })
-        const snapTextStartInterpolate =  slideSnapBar.interpolate({
-            inputRange: [0 ,50, 100],
-            outputRange:["900", "300" , "300"]
-        })
-        const snapTextMiddletInterpolate =  slideSnapBar.interpolate({
-            inputRange: [0 ,50, 100],
-            outputRange:["300", "900" , "300"]
-        })
-        const snapTextEndInterpolate =  slideSnapBar.interpolate({
-            inputRange: [0 ,50, 100],
-            outputRange:["300", "300" , "900"]
-        })
-        return(
-            <View style={styles.containerSnap}>
-                <View style={styles.containerLines}>
-                    <View style={styles.snapBacklLine}>
-                        <Animated.View style={[styles.snapLine, {width: SlideInterpolate}]} />
-                    </View>
-                    <Animated.View style={styles.snapBull} onStartShouldSetResponderCapture={()=> changeSnap({n: 0, level: 2})} />
-                    <Animated.View style={[styles.snapBull, {backgroundColor: middleBottomInterpolate}]} onStartShouldSetResponderCapture={()=> changeSnap({n: 50, level:4})} />
-                    <Animated.View style={[styles.snapBull, {backgroundColor: endBottomInterpolate}]} onStartShouldSetResponderCapture={()=> changeSnap({n: 100, level: 7})} />
-                </View>
-                <View style={styles.snapBoxText}>
-                    <Animated.Text style={[styles.snapText, {fontWeight: snapTextStartInterpolate}]}>Easy</Animated.Text>
-                    <Animated.Text style={[styles.snapText, {fontWeight: snapTextMiddletInterpolate}]}>medium</Animated.Text>
-                    <Animated.Text style={[styles.snapText, {fontWeight: snapTextEndInterpolate}]}>Hard</Animated.Text>
-
-                </View>
-            </View>
-        )
+    const changeSnap = (level) =>{
+        levelPoint.current = level
     }
 
     // Render
@@ -299,7 +247,7 @@ const Game = () => {
                         <DisplayTableRef/>
                         <BtnReloadRef refUpdate={updateRef} />
                     </View>
-                    <DisplaySnapSlider/>
+                    <SnapSlider snapValue={changeSnap}/>
             </View>
                 <View style={styles.containerBody}>
                 <DisplayTable/>
@@ -378,44 +326,4 @@ const styles = StyleSheet.create({
         height: 30,
         borderRadius: 30,
     },
-    containerSnap:{
-        width: "100%",
-        paddingVertical: 10,
-        paddingHorizontal: 15,
-    },
-    snapBull:{
-        width: 30,
-        height: 30,
-        backgroundColor: "#00f",
-        borderRadius: 15,
-        elevation: 2,
-    },
-    containerLines:{
-        width:"100%",
-        position: 'relative',
-        flexDirection: "row",
-        alignItems: "center",
-        justifyContent:"space-between"
-
-    },
-    snapBacklLine:{
-        position:"absolute",
-        backgroundColor: "#777",
-        width: "100%",
-        height: 10,
-        transform: [{scaleX: 0.90}]
-    },
-    snapLine:{
-        backgroundColor: "#55f",
-        height: "100%",
-    },
-    snapBoxText:{
-        flexDirection: "row",
-        justifyContent: "space-between",
-    },
-    snapText:{
-        fontWeight: '900',
-        color:"#fff",
-    },
-
 })
