@@ -7,6 +7,7 @@ import PlayManager from '../components/PlayManager'
 import BtnReloadRef from '../components/game_components/BtnReloadRef'
 import Infos from '../components/game_components/Infos'
 import SnapSlider from '../components/game_components/SnapSlider'
+import TableRef from '../components/game_components/TableRef'
 
 const Game = () => {
 
@@ -210,26 +211,6 @@ const Game = () => {
         )
     }
 
-    // display table ref
-    const DisplayTableRef = () =>{
-        return(
-            <View style={styles.refContainer}>
-                {refTable.map((item, index) => 
-                    item ?
-                    <View
-                        key={index}
-                        style={[styles.refElement, {backgroundColor: item.color}]}
-                    />
-                    :
-                    <View
-                        key={index}
-                        style={[styles.refElement, {backgroundColor: "#aaaa"}]}
-                    />
-                )}
-            </View>
-        )
-    }
-
     // change bar animate
     const changeSnap = (level) =>{
         levelPoint.current = level
@@ -244,7 +225,7 @@ const Game = () => {
             />
             <View style={styles.containerHeader}>
                     <View style={styles.boxInHeader}>
-                        <DisplayTableRef/>
+                        <TableRef table={refTable}/>
                         <BtnReloadRef refUpdate={updateRef} />
                     </View>
                     <SnapSlider snapValue={changeSnap}/>
@@ -314,16 +295,5 @@ const styles = StyleSheet.create({
         width: 100,
         height: 100,
         position: 'absolute'
-    },
-    refContainer:{
-        flexDirection: 'row',
-        flexWrap: 'wrap',
-        width: 100,
-        height: 100,
-    },
-    refElement:{
-        width: 30,
-        height: 30,
-        borderRadius: 30,
     },
 })
