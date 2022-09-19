@@ -1,7 +1,12 @@
 import React, {useState, useRef, useEffect} from 'react'
-import { StyleSheet, View, Text, PanResponder, Animated, Vibration, TouchableOpacity, Image } from 'react-native'
+import { StyleSheet, View, Text, PanResponder, Animated, Vibration, Image } from 'react-native'
 import {useStoreState} from 'easy-peasy'
 import PlayManager from '../components/PlayManager'
+
+// import components
+import BtnReloadRef from '../components/game_components/BtnReloadRef'
+import Infos from '../components/game_components/Infos'
+
 
 const Game = () => {
 
@@ -226,24 +231,6 @@ const Game = () => {
         )
     }
 
-    //display box infos
-    const DisplayInfos = ({infos}) => {
-        return(
-            <View style={styles.boxInfos}>
-                <View style={styles.inBoxInfos}>
-                    <Text style={styles.textInfos}>Score: {infos.score}</Text>
-                    <Text style={styles.textInfos}>Moves: {infos.move}</Text>
-                </View>
-                <View style={styles.oldList}>
-                    {infos.oldMoves.length > 0 && <Text style={styles.titleOldList}>Old Movements:</Text>}
-                    {infos.oldMoves.map((move, index)=>
-                        <Text key={index}>➜ {move} - {move < 10 ? "★★★" : move < 20 ? "★★" : "★" } </Text>
-                    )}
-                </View>
-            </View>
-        )
-    }
-
     // change bar animate
     const changeSnap = (data) =>{
         Animated.timing(slideSnapBar, {
@@ -300,20 +287,6 @@ const Game = () => {
         )
     }
 
-    const DisplayBtnReloadRef = () =>{
-
-        return(
-            <TouchableOpacity 
-                onPress={()=>updateRef(true)}
-                style={styles.btnReloadRef}
-            >
-                <Image style={styles.imgReloadIcon}
-                    source={require("../assets/img/reload_icon.png")}
-                />
-            </TouchableOpacity>
-        )
-    }
-    
     // Render
     return (
         <View style={styles.container}>
@@ -324,13 +297,13 @@ const Game = () => {
             <View style={styles.containerHeader}>
                     <View style={styles.boxInHeader}>
                         <DisplayTableRef/>
-                        <DisplayBtnReloadRef />
+                        <BtnReloadRef refUpdate={updateRef} />
                     </View>
                     <DisplaySnapSlider/>
             </View>
                 <View style={styles.containerBody}>
                 <DisplayTable/>
-                <DisplayInfos infos={dataInfos}/>
+                <Infos infos={dataInfos}/>
             </View>
         </View>
     )
@@ -405,31 +378,6 @@ const styles = StyleSheet.create({
         height: 30,
         borderRadius: 30,
     },
-    boxInfos:{
-        width: "100%",
-        marginTop: 10,
-        paddingHorizontal: 20,
-        justifyContent: 'flex-start',
-    },
-    inBoxInfos:{
-        flexDirection: 'row',  
-        justifyContent:'space-between'  
-    },
-    textInfos:{
-        color: "#fff",
-        fontSize: 20,
-    },
-    oldList:{
-        backgroundColor: "#fff",
-        elevation: 4,
-        borderRadius: 7,
-        padding: 5,
-    },
-    titleOldList:{
-        fontWeight:  'bold',
-        fontSize: 15,
-        textAlign: 'center',
-    },
     containerSnap:{
         width: "100%",
         paddingVertical: 10,
@@ -469,16 +417,5 @@ const styles = StyleSheet.create({
         fontWeight: '900',
         color:"#fff",
     },
-    btnReloadRef: {
-        height: 60,
-        padding: 10,
-        backgroundColor: "#6c00d1bd",
-        borderRadius: 40,
-    },
-    imgReloadIcon: {
-        resizeMode: "contain",
-        width: 40,
-        height: 40,
-    }
 
 })
