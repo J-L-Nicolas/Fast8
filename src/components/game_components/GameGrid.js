@@ -7,7 +7,7 @@ const size = {
     height: 100
 }
 
-const GameGrid = ({tableGame, changeTableGame, changeScore}) => {
+const GameGrid = ({tableGame, changeTableGame}) => {
 
     //init ref
     const layoutInfos = useRef(size)
@@ -121,7 +121,6 @@ const GameGrid = ({tableGame, changeTableGame, changeScore}) => {
         newTable[indexOut] = save
 
         changeTableGame(newTable)
-        changeScore(0)
     }
 
     // interpolate aniated

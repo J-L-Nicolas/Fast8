@@ -1,5 +1,5 @@
 import React, {useState, useRef, useEffect} from 'react'
-import { StyleSheet, View, Vibration, Image } from 'react-native'
+import { StyleSheet, View, Vibration, Image, Text } from 'react-native'
 import {useStoreState} from 'easy-peasy'
 import PlayManager from '../components/PlayManager'
 
@@ -19,47 +19,51 @@ const Game = () => {
     const [cubeTable, setcubeTable] = useState(tableCubes)
     const [refTable, setrefTable] = useState(PlayManager.generateTabAlt(3, cubeTable))
     const [dataInfos, setdataInfos] = useState({score: 0, move: 0, oldMoves: []})
+    const [moveInfo, setMoveInfo] = useState(0)
+    const [scoreInfo, setScoreInfo] = useState(0)
 
     //init ref
+    const oldMovesInfo = useRef([])
     const levelPoint = useRef(2)
 
     //updateRef
     const updateRef = (type = false) => {
         const newValue = levelPoint.current + PlayManager.getRandomInt(3)
         setrefTable(PlayManager.generateTabAlt(newValue, cubeTable))
-        type && setdataInfos({...dataInfos, move: 0})
+        setMoveInfo(0)
+    }
+
+    // change bar animate
+    const changeSnap = (level) =>{
+        levelPoint.current = level
     }
 
     // init effect
     useEffect(() => {
       const result = PlayManager.comparTabs(cubeTable, refTable, "idColor")
       if (result) {
-        updateScore(1)
+        // scrore update
+        oldMovesInfo.current = [moveInfo + 1, ...oldMovesInfo.current]
+        setMoveInfo(0)
+        setScoreInfo((e)=> e+= 1)
+        // update ref table
         updateRef()
         Vibration.vibrate(50)
-
+      }else{
+        setMoveInfo((e)=> e += 1)
       }
     }, [cubeTable])
 
-    const updateScore = (id) =>{
-        let mewData = {...dataInfos};
-        if (id == 0){
-            mewData.move += 1
-        }else{
-            mewData.score += 1
-            mewData.oldMoves = [mewData.move , ...mewData.oldMoves]
-            if(mewData.oldMoves.length > 4){
-                mewData.oldMoves.pop()
-            }
-            mewData.move = 0
+    useEffect(() => {
+        if (oldMovesInfo.current.length > 4){
+            oldMovesInfo.current.pop()
         }
-        setdataInfos(mewData)
-    }
-    
-    // change bar animate
-    const changeSnap = (level) =>{
-        levelPoint.current = level
-    }
+        setdataInfos({
+            score: scoreInfo, 
+            move: moveInfo, 
+            oldMoves: oldMovesInfo.current
+        })
+    }, [moveInfo])
 
     // Render
     return (
@@ -75,8 +79,9 @@ const Game = () => {
                 </View>
                 <SnapSlider snapValue={changeSnap}/>
             </View>
+            <Text>dataInfos: {scoreInfo} {moveInfo} {oldMovesInfo.length}</Text>
             <View style={styles.containerBody}>
-                <GameGrid key={cubeTable}  tableGame={cubeTable} changeTableGame={setcubeTable} changeScore={updateScore}/>
+                <GameGrid key={cubeTable} tableGame={cubeTable} changeTableGame={setcubeTable} />
                 <Infos infos={dataInfos}/>
             </View>
         </View>
