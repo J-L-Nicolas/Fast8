@@ -7,7 +7,6 @@ export default class Game {
     static generateTabAlt(numb, list){
         const tempList = [...list]
         const finalTable = [null, null, null,null,null, null, null,null,null];
-        // finalTable.length = tempList.length
 
         for (let index = 0; index < numb; index++) {
             let myIndex = this.getRandomInt(finalTable.length)
