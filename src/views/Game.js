@@ -35,7 +35,6 @@ const Game = () => {
       const result = PlayManager.comparTabs(cubeTable, refTable, "idColor")
       if (result) {
         updateScore(1)
-        refGame.force
         updateRef()
         Vibration.vibrate(50)
 
@@ -77,7 +76,7 @@ const Game = () => {
                 <SnapSlider snapValue={changeSnap}/>
             </View>
             <View style={styles.containerBody}>
-                <GameGrid tableGame={cubeTable} key={cubeTable} changeTableGame={setcubeTable} changeScore={updateScore}/>
+                <GameGrid key={cubeTable}  tableGame={cubeTable} changeTableGame={setcubeTable} changeScore={updateScore}/>
                 <Infos infos={dataInfos}/>
             </View>
         </View>

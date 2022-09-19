@@ -1,16 +1,19 @@
-import React, {useEffect, useRef, useState} from 'react'
+import React, {useEffect, useRef} from 'react'
 import { StyleSheet, View, Animated, PanResponder } from 'react-native'
+
+//data size
+const size = {
+    width: 100,
+    height: 100
+}
 
 const GameGrid = ({tableGame, changeTableGame, changeScore}) => {
 
-
-    console.log("update --: ", tableGame)
-
     //init ref
-    const layoutInfos = useRef(null)
+    const layoutInfos = useRef(size)
     const layoutTableInfos = useRef([]).current
-    const pan = useRef(new Animated.ValueXY()).current;
-    const pan2 = useRef(new Animated.ValueXY()).current;
+    const pan = useRef(new Animated.ValueXY({x:-100, y:-100})).current;
+    const pan2 = useRef(new Animated.ValueXY({x:-100, y:-100})).current;
     const colorSelected = useRef(new Animated.Value(8)).current
     const colorSelectedHidde = useRef(new Animated.Value(0)).current
 
@@ -80,8 +83,6 @@ const GameGrid = ({tableGame, changeTableGame, changeScore}) => {
     }
 
     const afertMove = (dir, index) => {
-        console.log("Afertmove index: ", index )
-        console.log("table use: ", tableGame)
 
         switch (dir) {
             case "up":
@@ -143,9 +144,6 @@ const GameGrid = ({tableGame, changeTableGame, changeScore}) => {
                     key={index}  
                     onLayout={event => {
                         const positionElement = event.nativeEvent.layout;
-                        if (index == 0){
-                            layoutInfos.current = positionElement;
-                        }
                         layoutTableInfos[index] = positionElement;
                     }}
                     
@@ -176,14 +174,14 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     cube:{
-        width: 100,
-        height: 100,
+        width: size.width,
+        height: size.height,
         marginBottom: 5,
     },
     cubeHidde:{
-        width: 100,
-        height: 100,
-        position: 'absolute'
+        width: size.width,
+        height: size.height,
+        position: 'absolute',
     },
     cubeMove:{
         width: 100,
