@@ -47,5 +47,13 @@ const store = createStore({
             state.langues = "en"
         }
     }),
+    selectLang: action((state, payload) => {
+        const local = payload.split("_")[0]
+        if (local === "fr"){
+            state.langues = "fr"
+        }else{
+            state.langues = "en"
+        }
+    }),
 });
 export default store;

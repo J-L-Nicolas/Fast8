@@ -1,4 +1,6 @@
 import React from 'react'
+import { NativeModules  } from 'react-native'
+import {useStoreActions} from 'easy-peasy'
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
@@ -8,6 +10,13 @@ import MenuScreen  from '../views/Menu'
 import GameScreen from '../views/Game'
 
 const Routes = () => {
+
+    // init store
+    const selectLang = useStoreActions((actions) => actions.selectLang);
+
+    // read lang system
+    const localeLang = NativeModules.I18nManager.localeIdentifier 
+    selectLang(localeLang)
     
     //init stack
     const Stack = createNativeStackNavigator();

@@ -1,15 +1,15 @@
 import React, {useEffect} from 'react'
 import { StyleSheet, View, Text, Image, TouchableOpacity, BackHandler } from 'react-native'
 import { useNavigation } from '@react-navigation/native';
-import {useStoreState, useStoreActions} from 'easy-peasy'
+import {useStoreState} from 'easy-peasy'
 
 // imp components
 import SwictLang from '../components/menu_components/SwictLang'
 
 const Menu = () => {
 
-  // init navigation
-  const navigation = useNavigation();
+    // init navigation
+    const navigation = useNavigation();
     
     // init store
     const IdLang = useStoreState((state) => state.langues);
