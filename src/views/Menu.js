@@ -1,7 +1,10 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import { StyleSheet, View, Text, Image, TouchableOpacity, BackHandler } from 'react-native'
 import { useNavigation } from '@react-navigation/native';
 import {useStoreState, useStoreActions} from 'easy-peasy'
+
+// imp components
+import SwictLang from '../components/menu_components/SwictLang'
 
 const Menu = () => {
 
@@ -43,6 +46,7 @@ const Menu = () => {
         <TouchableOpacity style={styles.itemMenu} onPress={()=>BackHandler.exitApp()}>
           <Text style={styles.itemMenuTitle}>{lang.btn4}</Text>
         </TouchableOpacity>
+        <SwictLang />
         <Image
           source={require("../assets/img/bottom_0.png")}
           style={{width: "100%"}}

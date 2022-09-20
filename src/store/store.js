@@ -12,10 +12,6 @@ const store = createStore({
         {id: 7, color: "#ad0bd5", idColor: "violet", active: true},
         undefined
     ],
-    count: 0,
-    plusCount: action((state, payload) => {
-        state.count ++
-    }),
     // langues
     langues: "en",
     stringLang: {
@@ -43,6 +39,13 @@ const store = createStore({
             movesText: "Movements",
             textOLMove: "Anciens mouvements"
         }
-    }
+    },
+    toggleLang: action((state, payload) => {
+        if (state.langues === "en"){
+            state.langues = "fr"
+        }else{
+            state.langues = "en"
+        }
+    }),
 });
 export default store;
