@@ -9,8 +9,9 @@ const Menu = () => {
   const navigation = useNavigation();
     
     // init store
-    const count = useStoreState((state) => state.count);
-
+    const IdLang = useStoreState((state) => state.langues);
+    const lang = useStoreState((state) => state.stringLang)[IdLang];
+    
     // go game view
     const goGame=()=>{
       navigation.navigate("Game")
@@ -27,20 +28,20 @@ const Menu = () => {
             style={styles.itemMenuG}
             onPress={goGame}
           >
-          <Text style={styles.itemMenuTitle}>Play</Text>
+          <Text style={styles.itemMenuTitle}>{lang.btn1}</Text>
           <Image
             source={require("../assets/img/icon_play.png")}
             style={{width: 14, height: 14, marginLeft: 10, marginTop: 5}}
           />
         </TouchableOpacity>
         <TouchableOpacity style={styles.itemMenu}>
-          <Text style={styles.itemMenuTitle}>Setting</Text>
+          <Text style={styles.itemMenuTitle}>{lang.btn2}</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.itemMenu}>
-          <Text style={styles.itemMenuTitle}>More Game</Text>
+          <Text style={styles.itemMenuTitle}>{lang.btn3}</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.itemMenu} onPress={()=>BackHandler.exitApp()}>
-          <Text style={styles.itemMenuTitle}>Exit</Text>
+          <Text style={styles.itemMenuTitle}>{lang.btn4}</Text>
         </TouchableOpacity>
         <Image
           source={require("../assets/img/bottom_0.png")}

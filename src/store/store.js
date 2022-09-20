@@ -20,7 +20,7 @@ const store = createStore({
     langues: "en",
     stringLang: {
         en:{
-            btn1: "play",
+            btn1: "Play",
             btn2: "Setting",
             btn3: "More Game",
             btn4: "Exit",
