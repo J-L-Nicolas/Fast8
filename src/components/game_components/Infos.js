@@ -1,15 +1,21 @@
 import React from 'react'
 import { StyleSheet, View, Text } from 'react-native'
+import {useStoreState} from 'easy-peasy'
 
 const Infos = ({infos}) => {
+
+    // init store
+    const IdLang = useStoreState((state) => state.langues);
+    const lang = useStoreState((state) => state.stringLang)[IdLang];
+
     return(
         <View style={styles.boxInfos}>
             <View style={styles.inBoxInfos}>
-                <Text style={styles.textInfos}>Score: {infos.score}</Text>
-                <Text style={styles.textInfos}>Moves: {infos.move}</Text>
+                <Text style={styles.textInfos}>{lang.scoreText}: {infos.score}</Text>
+                <Text style={styles.textInfos}>{lang.movesText}: {infos.move}</Text>
             </View>
             <View style={styles.oldList}>
-                {infos.oldMoves.length > 0 && <Text style={styles.titleOldList}>Old Movements:</Text>}
+                {infos.oldMoves.length > 0 && <Text style={styles.titleOldList}>{lang.textOLMove}:</Text>}
                 {infos.oldMoves.map((move, index)=>
                     <Text key={index}>➜ {move} - {move < 10 ? "★★★" : move < 20 ? "★★" : "★" } </Text>
                 )}

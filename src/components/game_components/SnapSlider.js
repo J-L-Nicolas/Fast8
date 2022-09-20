@@ -1,7 +1,12 @@
 import React, {useRef} from 'react'
 import { StyleSheet, View, Animated } from 'react-native'
+import {useStoreState} from 'easy-peasy'
 
 const SnapSlider = ({snapValue}) =>{
+
+    //init store
+    const IdLang = useStoreState((state) => state.langues);
+    const lang = useStoreState((state) => state.stringLang)[IdLang];
 
     //init ref
     const slideSnapBar = useRef(new Animated.Value(0)).current
@@ -53,9 +58,9 @@ const SnapSlider = ({snapValue}) =>{
                 <Animated.View style={[styles.snapBull, {backgroundColor: endBottomInterpolate}]} onStartShouldSetResponderCapture={()=> changeSnap({n: 100, level: 7})} />
             </View>
             <View style={styles.snapBoxText}>
-                <Animated.Text style={[styles.snapText, {fontWeight: snapTextStartInterpolate}]}>Easy</Animated.Text>
-                <Animated.Text style={[styles.snapText, {fontWeight: snapTextMiddletInterpolate}]}>medium</Animated.Text>
-                <Animated.Text style={[styles.snapText, {fontWeight: snapTextEndInterpolate}]}>Hard</Animated.Text>
+                <Animated.Text style={[styles.snapText, {fontWeight: snapTextStartInterpolate}]}>{lang.sliderText_1}</Animated.Text>
+                <Animated.Text style={[styles.snapText, {fontWeight: snapTextMiddletInterpolate}]}>{lang.sliderText_2}</Animated.Text>
+                <Animated.Text style={[styles.snapText, {fontWeight: snapTextEndInterpolate}]}>{lang.sliderText_3}</Animated.Text>
 
             </View>
         </View>
