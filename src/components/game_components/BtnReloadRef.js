@@ -5,7 +5,7 @@ const BtnReloadRef = ({refUpdate}) =>{
 
     return(
         <TouchableOpacity 
-            onPress={()=>refUpdate(true)}
+            onPress={refUpdate}
             style={styles.btnReloadRef}
         >
             <Image style={styles.imgReloadIcon}

@@ -23,13 +23,19 @@ const Game = () => {
     const [scoreInfo, setScoreInfo] = useState(0)
 
     //init ref
-    const oldMovesInfo = useRef([])
+    const oldMovesInfo = useRef([]).current
     const levelPoint = useRef(2)
 
     //updateRef
-    const updateRef = (type = false) => {
-        const newValue = levelPoint.current + PlayManager.getRandomInt(3)
-        setrefTable(PlayManager.generateTabAlt(newValue, cubeTable))
+    const updateRef = () => {
+        const newValue = levelPoint.current + PlayManager.getRandomInt(3);
+        let result = [];
+        let verif = true;
+        while (verif) {
+            result = PlayManager.generateTabAlt(newValue, cubeTable)
+            verif = PlayManager.comparTabs(cubeTable, result, "idColor")
+        }
+        setrefTable(result)
         setMoveInfo(0)
     }
 
@@ -43,7 +49,7 @@ const Game = () => {
       const result = PlayManager.comparTabs(cubeTable, refTable, "idColor")
       if (result) {
         // scrore update
-        oldMovesInfo.current = [moveInfo + 1, ...oldMovesInfo.current]
+        oldMovesInfo.unshift(moveInfo + 1)
         setMoveInfo(0)
         setScoreInfo((e)=> e+= 1)
         // update ref table
@@ -55,13 +61,13 @@ const Game = () => {
     }, [cubeTable])
 
     useEffect(() => {
-        if (oldMovesInfo.current.length > 4){
-            oldMovesInfo.current.pop()
+        if (oldMovesInfo.length > 4){
+            oldMovesInfo.pop()
         }
         setdataInfos({
             score: scoreInfo, 
             move: moveInfo, 
-            oldMoves: oldMovesInfo.current
+            oldMoves: oldMovesInfo
         })
     }, [moveInfo])
 
