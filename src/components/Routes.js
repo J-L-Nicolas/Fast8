@@ -8,6 +8,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import HomeScreen from '../views/Home'
 import MenuScreen  from '../views/Menu'
 import GameScreen from '../views/Game'
+import SettingScreen from '../views/Setting'
 
 const Routes = () => {
 
@@ -39,6 +40,7 @@ const Routes = () => {
                 <Stack.Screen name="Home" component={HomeScreen} />
                 <Stack.Screen name="Menu" component={MenuScreen} />
                 <Stack.Screen name="Game" component={GameScreen} />
+                <Stack.Screen name="Setting" component={SettingScreen} />
             </Stack.Navigator>
         </NavigationContainer>
     )

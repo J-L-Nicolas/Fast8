@@ -25,6 +25,11 @@ const Menu = () => {
       navigation.navigate("Game")
     }
 
+    // go Setting view
+    const goSetting=()=>{
+      navigation.navigate("Setting")
+    }
+
   return (
     <View style={styles.container}>
       <Image
@@ -42,7 +47,7 @@ const Menu = () => {
             style={{width: 14, height: 14, marginLeft: 10, marginTop: 5}}
           />
         </TouchableOpacity>
-        <TouchableOpacity style={styles.itemMenu}>
+        <TouchableOpacity style={styles.itemMenu} onPress={goSetting}>
           <Text style={styles.itemMenuTitle}>{lang.btn2}</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.itemMenu} onPress={()=> changeColorsMode("light")}>
