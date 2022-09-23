@@ -1,5 +1,5 @@
-import React from 'react'
-import { NativeModules  } from 'react-native'
+import React, {useEffect} from 'react'
+import { NativeModules, Appearance } from 'react-native'
 import {useStoreActions} from 'easy-peasy'
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -13,13 +13,25 @@ const Routes = () => {
 
     // init store
     const selectLang = useStoreActions((actions) => actions.selectLang);
+    const changeColorsMode = useStoreActions((action) => action.changeColorsMode)
 
     // read lang system
     const localeLang = NativeModules.I18nManager.localeIdentifier 
     selectLang(localeLang)
+
+    // read color mode
+    changeColorsMode(Appearance.getColorScheme())
     
     //init stack
     const Stack = createNativeStackNavigator();
+
+    //effect event mode light/dark
+    useEffect(() => {
+        Appearance.addChangeListener(()=>{
+            changeColorsMode(Appearance.getColorScheme())
+        })
+    }, [])
+    
 
     return (
         <NavigationContainer>

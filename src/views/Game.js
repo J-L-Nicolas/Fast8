@@ -14,12 +14,16 @@ const Game = () => {
 
     // init store
     const tableCubes = useStoreState((state) => state.tableCubes);
+    const getColors = useStoreState((state) => state.getColors);
+
+    //styles
+    const styles = StyleSheet.create(dataStyle(getColors))
     
     //init state 
     const [cubeTable, setcubeTable] = useState(tableCubes)
     const [refTable, setrefTable] = useState(PlayManager.generateTabAlt(3, cubeTable))
     const [dataInfos, setdataInfos] = useState({score: 0, move: 0, oldMoves: []})
-    const [moveInfo, setMoveInfo] = useState(0)
+    const [moveInfo, setMoveInfo] = useState(-1)
     const [scoreInfo, setScoreInfo] = useState(0)
 
     //init ref
@@ -97,34 +101,36 @@ const Game = () => {
 export default Game
 
 //Style
-const styles = StyleSheet.create({
-    // style in game component
-    container:{
-        flex: 1,
-        alignItems: "center",
-        backgroundColor: "#383e6e",
-        paddingHorizontal: 10,
-    },
-    containerHeader:{
-        width: "100%",
-        padding: 10,
-        backgroundColor: "#515ba1cc",
-        borderRadius: 30,
-        marginTop: 50,
-    },
-    boxInHeader: {
-        flexDirection: 'row',
-        justifyContent: 'space-around',
-        alignItems: 'center',
-    },
-    containerBody:{
-        width: "100%",
-        padding: 20,
-        backgroundColor: "#515ba1",
-        borderRadius: 30,
-        marginTop: 20,
-        justifyContent: 'center',
-        alignItems:'center',
-        paddingTop: 25,
-    },
-})
+const dataStyle = (getcolor) => {
+
+    return {
+        container:{
+            flex: 1,
+            alignItems: "center",
+            backgroundColor: getcolor.secondary,
+            paddingHorizontal: 10,
+        },
+        containerHeader:{
+            width: "100%",
+            padding: 10,
+            backgroundColor: `${getcolor.primary}cc`,
+            borderRadius: 30,
+            marginTop: 50,
+        },
+        boxInHeader: {
+            flexDirection: 'row',
+            justifyContent: 'space-around',
+            alignItems: 'center',
+        },
+        containerBody:{
+            width: "100%",
+            padding: 20,
+            backgroundColor: getcolor.primary,
+            borderRadius: 30,
+            marginTop: 20,
+            justifyContent: 'center',
+            alignItems:'center',
+            paddingTop: 25,
+        }
+    }
+}

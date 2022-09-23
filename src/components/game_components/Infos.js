@@ -48,6 +48,7 @@ const styles = StyleSheet.create({
         padding: 5,
     },
     titleOldList:{
+        color: "#777",
         fontWeight:  'bold',
         fontSize: 15,
         textAlign: 'center',

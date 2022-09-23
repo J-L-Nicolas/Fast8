@@ -1,7 +1,14 @@
 import React from 'react'
 import { StyleSheet, View } from 'react-native'
+import {useStoreState} from 'easy-peasy'
 
 const TableRef = ({table}) => {
+
+    // init store
+    const getColors = useStoreState((state) => state.getColors);
+
+    //styles
+    const styles = StyleSheet.create(dataStyle(getColors))
     
     return(
         <View style={styles.refContainer}>
@@ -14,7 +21,7 @@ const TableRef = ({table}) => {
                 :
                 <View
                     key={index}
-                    style={[styles.refElement, {backgroundColor: "#aaaa"}]}
+                    style={styles.refElement}
                 />
             )}
         </View>
@@ -23,16 +30,20 @@ const TableRef = ({table}) => {
 
 export default TableRef
 
-const styles = StyleSheet.create({
-    refContainer:{
-        flexDirection: 'row',
-        flexWrap: 'wrap',
-        width: 100,
-        height: 100,
-    },
-    refElement:{
-        width: 30,
-        height: 30,
-        borderRadius: 30,
-    },
-})
+const dataStyle = (getcolor) => {
+
+    return {
+        refContainer:{
+            flexDirection: 'row',
+            flexWrap: 'wrap',
+            width: 100,
+            height: 100,
+        },
+        refElement:{
+            width: 30,
+            height: 30,
+            borderRadius: 30,
+            backgroundColor: getcolor.backTertiary
+        },
+    }
+}

@@ -1,4 +1,5 @@
-import {createStore, action} from 'easy-peasy'
+import {createStore, action, computed} from 'easy-peasy'
+import Colors from '../components/Colors'
 
 const store = createStore({
     tableCubes: [
@@ -55,5 +56,12 @@ const store = createStore({
             state.langues = "en"
         }
     }),
+    // colors manager
+    colorMode: "light",
+    changeColorsMode: action((state, payload) => {
+        state.colorMode = payload
+    }),
+    getColors: computed(state =>  Colors[state.colorMode])
+   
 });
 export default store;
