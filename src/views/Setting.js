@@ -32,8 +32,8 @@ const Setting = () => {
     const changesystemColor = useStoreActions((action) => action.changeSystemColor)
     const vibration = useStoreState((state) => state.vibration);
     const setVibration = useStoreActions((action) => action.setVibration)
-    const sound = useStoreState((state) => state.vibration);
-    const setSound = useStoreActions((action) => action.setVibration)
+    const sound = useStoreState((state) => state.sound);
+    const setSound = useStoreActions((action) => action.setSound)
     
     //styles
     const styles = StyleSheet.create(dataStyle(getColors))
