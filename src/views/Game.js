@@ -19,7 +19,7 @@ const Game = () => {
     const [cubeTable, setcubeTable] = useState(tableCubes)
     const [refTable, setrefTable] = useState(PlayManager.generateTabAlt(3, cubeTable))
     const [dataInfos, setdataInfos] = useState({score: 0, move: 0, oldMoves: []})
-    const [moveInfo, setMoveInfo] = useState(0)
+    const [moveInfo, setMoveInfo] = useState(-1)
     const [scoreInfo, setScoreInfo] = useState(0)
 
     //init ref
