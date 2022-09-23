@@ -1,11 +1,11 @@
 import React, {useState} from 'react'
-import { StyleSheet, View, Text, Appearance } from 'react-native'
+import { StyleSheet, View, Text, Appearance, Switch } from 'react-native'
 import {useStoreActions, useStoreState} from 'easy-peasy'
 import RadioGroup from 'react-native-radio-buttons-group';
 
 const radioButtonsColorMode = [
     {
-        id: '1', // acts as primary key, should be unique and non-empty string
+        id: '1',
         label: 'Light',
         value: 'light'
     }, 
@@ -30,7 +30,11 @@ const Setting = () => {
     const lang = useStoreState((state) => state.stringLang)[IdLang];
     const changeColorsMode = useStoreActions((action) => action.changeColorsMode)
     const changesystemColor = useStoreActions((action) => action.changeSystemColor)
-
+    const vibration = useStoreState((state) => state.vibration);
+    const setVibration = useStoreActions((action) => action.setVibration)
+    const sound = useStoreState((state) => state.vibration);
+    const setSound = useStoreActions((action) => action.setVibration)
+    
     //styles
     const styles = StyleSheet.create(dataStyle(getColors))
 
@@ -51,14 +55,32 @@ const Setting = () => {
     return (
         <View style={styles.container}>
         <View style={styles.boxTitle}>
-            <Text style={styles.title}>Setting</Text>
+            <Text style={styles.title}>{lang.settingTitle}</Text>
         </View>
         <View style={styles.boxParam}>
-            <Text style={styles.titleParam}>Choose a theme Color: </Text>
+            <Text style={styles.titleParam}>{lang.selectTheme}: </Text>
             <RadioGroup 
                 radioButtons={radioButtonsColors} 
                 onPress={onChangeColorMode} 
-                containerStyle={styles.radio}
+                labelStyle={styles.radio}
+            />
+        </View>
+        <View style={styles.boxParam}>
+            <Text style={styles.titleParam}>{lang.vibrasionSelect}: </Text>
+            <Switch
+                trackColor={{ false: "#767577", true: "#81b0ff" }}
+                thumbColor={vibration ? styles.btnActive : styles.secondary}
+                onValueChange={setVibration}
+                value={vibration}
+            />
+        </View>
+        <View style={styles.boxParam}>
+            <Text style={styles.titleParam}>{lang.audioSelet}: </Text>
+            <Switch
+                trackColor={{ false: "#767577", true: "#81b0ff" }}
+                thumbColor={sound ? styles.btnActive : styles.secondary}
+                onValueChange={setSound}
+                value={sound}
             />
         </View>
         </View>
@@ -86,6 +108,7 @@ const dataStyle = (getcolor) => {
       title:{
         fontSize: 30,
         fontWeight: 'bold',
+        color: getcolor.primaryFont
       },
       boxParam:{
         width: "100%",
@@ -93,13 +116,16 @@ const dataStyle = (getcolor) => {
         borderTopWidth: 5,
         borderColor: "#8884",
         alignItems: "center",
+        borderTopLeftRadius: 40,
+        borderTopRightRadius: 40,
       },
       titleParam:{
+        color: getcolor.secondaryFont,
         fontSize: 20,
         fontWeight: 'bold',
       },
       radio:{
-    
+        color: getcolor.secondaryFont,
       }
     }
 }

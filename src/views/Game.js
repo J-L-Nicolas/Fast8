@@ -15,6 +15,7 @@ const Game = () => {
     // init store
     const tableCubes = useStoreState((state) => state.tableCubes);
     const getColors = useStoreState((state) => state.getColors);
+    const vibrationStore = useStoreState((state) => state.vibration);
 
     //styles
     const styles = StyleSheet.create(dataStyle(getColors))
@@ -58,9 +59,10 @@ const Game = () => {
         setScoreInfo((e)=> e+= 1)
         // update ref table
         updateRef()
-        Vibration.vibrate(50)
+        vibrationStore && Vibration.vibrate(100)
       }else{
         setMoveInfo((e)=> e += 1)
+        vibrationStore && Vibration.vibrate(50)
       }
     }, [cubeTable])
 
