@@ -1,5 +1,5 @@
 import React, {useRef, useEffect} from 'react'
-import { StyleSheet, Text, TouchableOpacity , Image, View, Animated} from 'react-native'
+import { StyleSheet, TouchableOpacity, View, Animated} from 'react-native'
 import {useStoreState, useStoreActions} from 'easy-peasy'
 
 const SwictLang = () => {
