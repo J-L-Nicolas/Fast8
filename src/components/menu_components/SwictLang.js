@@ -10,7 +10,7 @@ const SwictLang = () => {
 
   return (
     <TouchableOpacity onPress={toggleLang}>
-        <Text>{IdLang == "en" ?  "Francais" : "English" }</Text>
+        <Text>{IdLang == "en" ?  "Français" : "English" }</Text>
     </TouchableOpacity>
   )
 }

@@ -8,7 +8,7 @@ const colors = {
         btnActive: "#515ba1",
         backPrimary: "#eee",
         backSecomdary: "#ccc",
-        backTertiary: "#eee5"
+        backTertiary: "#eee8"
     },
     dark: {
         primaryFont: "#fff",
@@ -18,7 +18,7 @@ const colors = {
         btnActive: "#36a2d5",
         backPrimary: "#999",
         backSecomdary: "#666",
-        backTertiary: "#eee5"
+        backTertiary: "#eee8"
     }
 }
 

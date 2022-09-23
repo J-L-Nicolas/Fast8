@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import { NativeModules, Appearance } from 'react-native'
 import {useStoreActions} from 'easy-peasy'
 import { NavigationContainer } from '@react-navigation/native';
@@ -24,6 +24,14 @@ const Routes = () => {
     
     //init stack
     const Stack = createNativeStackNavigator();
+
+    //effect event mode light/dark
+    useEffect(() => {
+        Appearance.addChangeListener(()=>{
+            changeColorsMode(Appearance.getColorScheme())
+        })
+    }, [])
+    
 
     return (
         <NavigationContainer>
