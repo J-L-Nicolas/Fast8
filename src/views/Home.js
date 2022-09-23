@@ -21,12 +21,13 @@ const Home = () => {
     nextPage()
 
   return (
-    <View style={{flex: 1, backgroundColor: "#ffffff"}}>
+    <View style={{flex: 1}}>
       <Image
         source={require("../assets/img/loading.gif")}
-        style={{width: "100%" }}
+        style={{width: "100%", resizeMode: 'cover', height:"100%"}}
       />
     </View>
+
   )
 }
 
