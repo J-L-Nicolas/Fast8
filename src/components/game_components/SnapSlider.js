@@ -7,6 +7,10 @@ const SnapSlider = ({snapValue}) =>{
     //init store
     const IdLang = useStoreState((state) => state.langues);
     const lang = useStoreState((state) => state.stringLang)[IdLang];
+    const getColors = useStoreState((state) => state.getColors);
+
+    //styles
+    const styles = StyleSheet.create(dataStyle(getColors))
 
     //init ref
     const slideSnapBar = useRef(new Animated.Value(0)).current
@@ -28,11 +32,11 @@ const SnapSlider = ({snapValue}) =>{
     })
     const middleBottomInterpolate =  slideSnapBar.interpolate({
         inputRange: [0, 50],
-        outputRange:["#777" , "#00f"]
+        outputRange:[getColors.backSecomdary , "#00f"]
     })
     const endBottomInterpolate =  slideSnapBar.interpolate({
         inputRange: [0 ,50, 100],
-        outputRange:["#777", "#777" , "#00f"]
+        outputRange:[getColors.backSecomdary, getColors.backSecomdary , "#00f"]
     })
     const snapTextStartInterpolate =  slideSnapBar.interpolate({
         inputRange: [0 ,50, 100],
@@ -70,44 +74,47 @@ const SnapSlider = ({snapValue}) =>{
 
 export default SnapSlider
 
-const styles = StyleSheet.create({
-    containerSnap:{
-        width: "100%",
-        paddingVertical: 10,
-        paddingHorizontal: 15,
-    },
-    snapBull:{
-        width: 30,
-        height: 30,
-        backgroundColor: "#00f",
-        borderRadius: 15,
-        elevation: 2,
-    },
-    containerLines:{
-        width:"100%",
-        position: 'relative',
-        flexDirection: "row",
-        alignItems: "center",
-        justifyContent:"space-between"
+const dataStyle = (getcolor) => {
 
-    },
-    snapBacklLine:{
-        position:"absolute",
-        backgroundColor: "#777",
-        width: "100%",
-        height: 10,
-        transform: [{scaleX: 0.90}]
-    },
-    snapLine:{
-        backgroundColor: "#55f",
-        height: "100%",
-    },
-    snapBoxText:{
-        flexDirection: "row",
-        justifyContent: "space-between",
-    },
-    snapText:{
-        fontWeight: '900',
-        color:"#fff",
-    },
-})
+    return {
+        containerSnap:{
+            width: "100%",
+            paddingVertical: 10,
+            paddingHorizontal: 15,
+        },
+        snapBull:{
+            width: 30,
+            height: 30,
+            backgroundColor: "#00f",
+            borderRadius: 15,
+            elevation: 2,
+        },
+        containerLines:{
+            width:"100%",
+            position: 'relative',
+            flexDirection: "row",
+            alignItems: "center",
+            justifyContent:"space-between"
+
+        },
+        snapBacklLine:{
+            position:"absolute",
+            backgroundColor: getcolor.backPrimary,
+            width: "100%",
+            height: 10,
+            transform: [{scaleX: 0.90}]
+        },
+        snapLine:{
+            backgroundColor: "#55f",
+            height: "100%",
+        },
+        snapBoxText:{
+            flexDirection: "row",
+            justifyContent: "space-between",
+        },
+        snapText:{
+            fontWeight: '900',
+            color:"#fff",
+        }
+    }
+}
