@@ -1,8 +1,8 @@
 
 const colors = {
     light: {
-        primaryFont: "#fff",
-        secondaryFont: "#777",
+        primaryFont: "#222",
+        secondaryFont: "#333",
         primary: "#6b9cff",
         secondary: "#9bbaf8",
         btnActive: "#515ba1",
@@ -12,7 +12,7 @@ const colors = {
     },
     dark: {
         primaryFont: "#fff",
-        secondaryFont: "#777",
+        secondaryFont: "#ccc",
         primary: "#515ba1",
         secondary: "#373e6d",
         btnActive: "#36a2d5",

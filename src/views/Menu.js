@@ -1,13 +1,12 @@
-import React, {useEffect} from 'react'
+import React from 'react'
 import { StyleSheet, View, Text, Image, TouchableOpacity, BackHandler } from 'react-native'
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native'
 import {useStoreActions, useStoreState} from 'easy-peasy'
 
 // imp components
 import SwictLang from '../components/menu_components/SwictLang'
 
 const Menu = () => {
-
     // init navigation
     const navigation = useNavigation();
     
@@ -23,6 +22,11 @@ const Menu = () => {
     // go game view
     const goGame=()=>{
       navigation.navigate("Game")
+    }
+
+    // go Setting view
+    const goSetting=()=>{
+      navigation.navigate("Setting")
     }
 
   return (
@@ -42,7 +46,7 @@ const Menu = () => {
             style={{width: 14, height: 14, marginLeft: 10, marginTop: 5}}
           />
         </TouchableOpacity>
-        <TouchableOpacity style={styles.itemMenu}>
+        <TouchableOpacity style={styles.itemMenu} onPress={goSetting}>
           <Text style={styles.itemMenuTitle}>{lang.btn2}</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.itemMenu} onPress={()=> changeColorsMode("light")}>
