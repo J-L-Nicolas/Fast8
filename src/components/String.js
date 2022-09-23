@@ -19,7 +19,7 @@ const String = {
         btn1: "Joué",
         btn2: "Paramètres",
         btn3: "Plus de jeu",
-        btn4: "Sortie",
+        btn4: "Sortir",
         sliderText_1: "Facile",
         sliderText_2: "Moyen",
         sliderText_3: "Difficile",
