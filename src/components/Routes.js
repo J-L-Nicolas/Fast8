@@ -21,7 +21,7 @@ const Routes = () => {
     selectLang(localeLang)
 
     // read color mode
-    changeColorsMode(Appearance.getColorScheme())
+    changeColorsMode({color: Appearance.getColorScheme(), type: 0})
     
     //init stack
     const Stack = createNativeStackNavigator();
@@ -29,7 +29,7 @@ const Routes = () => {
     //effect event mode light/dark
     useEffect(() => {
         Appearance.addChangeListener(()=>{
-            changeColorsMode(Appearance.getColorScheme())
+            changeColorsMode({color: Appearance.getColorScheme(), type: 0})
         })
     }, [])
     

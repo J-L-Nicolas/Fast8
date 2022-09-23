@@ -57,9 +57,19 @@ const store = createStore({
         }
     }),
     // colors manager
+    systemColor: true,
+    changeSystemColor: action((state, payload) =>{
+        state.systemColor = payload
+    }),
+
     colorMode: "light",
     changeColorsMode: action((state, payload) => {
-        state.colorMode = payload
+
+        if(payload.type == 0 && state.systemColor){
+            state.colorMode = payload.color
+        }else if(payload.type == 1){
+            state.colorMode = payload.color
+        }
     }),
     getColors: computed(state =>  Colors[state.colorMode])
    
