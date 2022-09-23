@@ -6,6 +6,8 @@ const colors = {
         primary: "#6b9cff",
         secondary: "#9bbaf8",
         btnActive: "#515ba1",
+        backPrimary: "#eee",
+        backSecomdary: "#eee5"
     },
     dark: {
         primaryFont: "#fff",
