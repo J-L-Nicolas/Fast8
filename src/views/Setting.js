@@ -2,6 +2,7 @@ import React, {useState} from 'react'
 import { StyleSheet, View, Text, Appearance, Switch } from 'react-native'
 import {useStoreActions, useStoreState} from 'easy-peasy'
 import RadioGroup from 'react-native-radio-buttons-group';
+import LinearGradient from 'react-native-linear-gradient'
 
 const radioButtonsColorMode = [
     {
@@ -52,37 +53,43 @@ const Setting = () => {
         }
     }
 
+    const dataBoxParam = {
+        colors: [getColors.secondary, getColors.secondary, getColors.primary ],
+    }
+
     return (
         <View style={styles.container}>
-        <View style={styles.boxTitle}>
-            <Text style={styles.title}>{lang.settingTitle}</Text>
-        </View>
-        <View style={styles.boxParam}>
-            <Text style={styles.titleParam}>{lang.selectTheme}: </Text>
-            <RadioGroup 
-                radioButtons={radioButtonsColors} 
-                onPress={onChangeColorMode} 
-                labelStyle={styles.radio}
-            />
-        </View>
-        <View style={styles.boxParam}>
-            <Text style={styles.titleParam}>{lang.vibrasionSelect}: </Text>
-            <Switch
-                trackColor={{ false: "#767577", true: "#81b0ff" }}
-                thumbColor={vibration ? styles.btnActive : styles.secondary}
-                onValueChange={setVibration}
-                value={vibration}
-            />
-        </View>
-        <View style={styles.boxParam}>
-            <Text style={styles.titleParam}>{lang.audioSelet}: </Text>
-            <Switch
-                trackColor={{ false: "#767577", true: "#81b0ff" }}
-                thumbColor={sound ? styles.btnActive : styles.secondary}
-                onValueChange={setSound}
-                value={sound}
-            />
-        </View>
+            <View style={styles.boxTitle}>
+                <Text style={styles.title}>{lang.settingTitle}</Text>
+            </View>
+            <View style={{paddingHorizontal: 5, paddingTop: 30}}>
+                <LinearGradient style={styles.boxParam} {...dataBoxParam}>
+                    <Text style={styles.titleParam}>{lang.selectTheme}: </Text>
+                    <RadioGroup 
+                        radioButtons={radioButtonsColors} 
+                        onPress={onChangeColorMode} 
+                        labelStyle={styles.radio}
+                    />
+                </LinearGradient>
+                <LinearGradient style={styles.boxParam} {...dataBoxParam}>
+                    <Text style={styles.titleParam}>{lang.vibrasionSelect}: </Text>
+                    <Switch
+                        trackColor={{ false: "#767577", true: "#81b0ff" }}
+                        thumbColor={vibration ? styles.btnActive : styles.secondary}
+                        onValueChange={setVibration}
+                        value={vibration}
+                    />
+                </LinearGradient>
+                <LinearGradient style={styles.boxParam} {...dataBoxParam}>
+                    <Text style={styles.titleParam}>{lang.audioSelet}: </Text>
+                    <Switch
+                        trackColor={{ false: "#767577", true: "#81b0ff" }}
+                        thumbColor={sound ? styles.btnActive : styles.secondary}
+                        onValueChange={setSound}
+                        value={sound}
+                    />
+                </LinearGradient>
+            </View>
         </View>
     )
 }
@@ -112,12 +119,12 @@ const dataStyle = (getcolor) => {
       },
       boxParam:{
         width: "100%",
-        marginTop: 20,
-        borderTopWidth: 5,
-        borderColor: "#8884",
+        marginTop: 10,
+        borderWidth: 1,
+        borderColor: getcolor.secondary,
         alignItems: "center",
-        borderTopLeftRadius: 40,
-        borderTopRightRadius: 40,
+        borderTopLeftRadius: 15,
+        borderBottomRightRadius: 15,
       },
       titleParam:{
         color: getcolor.secondaryFont,

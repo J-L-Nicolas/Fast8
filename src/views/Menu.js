@@ -1,5 +1,5 @@
-import React from 'react'
-import { StyleSheet, View, Text, Image, TouchableOpacity, BackHandler } from 'react-native'
+import React, {useEffect, useRef, useState} from 'react'
+import { StyleSheet, View, Text, Image, TouchableOpacity, BackHandler, AppState} from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 import {useStoreActions, useStoreState} from 'easy-peasy'
 import Sound  from 'react-native-sound'
@@ -16,24 +16,52 @@ const Menu = () => {
     const lang = useStoreState((state) => state.stringLang)[IdLang];
     const getColors = useStoreState((state) => state.getColors);
     const changeColorsMode = useStoreActions((action) => action.changeColorsMode)
+    const getsound = useStoreState((state) => state.sound);
     const setMidi = useStoreActions((action) => action.setMidi)
 
-    // init sound
-    // Enable playback in silence mode
-    Sound.setCategory('Playback');
+    //state
+    const [appEtat, setappEtat] = useState(null)
 
-    let whoosh = new Sound('back_music.mp3', Sound.MAIN_BUNDLE, (error) => {
-      if (error) {
-        console.log('failed to load the sound', error);
-        return;
+    //ref
+    const soundMidi = useRef(null)
+
+    //effect
+    useEffect(() => {
+      // init sound
+      let whoosh = new Sound('back_music.mp3', Sound.MAIN_BUNDLE, (error) => {
+        if (error) {
+          console.log('failed to load the sound', error);
+          return;
+        }
+      
+        // Play the sound sens store
+        whoosh.play();
+        whoosh.setVolume(0.5)
+        whoosh.setNumberOfLoops(-1)
+        soundMidi.current = whoosh
+        setMidi(whoosh)
+      });
+    }, [])
+
+    useEffect(() => {
+      const subscription = AppState.addEventListener("change", nextAppState => {
+        setappEtat(nextAppState)
+      });
+  
+      return () => {
+        subscription.remove();
+      };
+    }, []);
+
+    useEffect(() => {
+      if (getsound && appEtat === "background"){
+        soundMidi.current.pause()
       }
-    
-      // Play the sound sens store
-      whoosh.play();
-      whoosh.setVolume(0.5)
-      whoosh.setNumberOfLoops(-1)
-      setMidi(whoosh)
-    });
+      if (getsound && appEtat === "active"){
+        console.log("open", getsound)
+        soundMidi.current.play()
+      }
+    }, [appEtat])
     
     //styles
     const styles = StyleSheet.create(dataStyle(getColors))

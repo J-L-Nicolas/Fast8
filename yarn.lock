@@ -5711,6 +5711,11 @@ react-native-gradle-plugin@^0.70.2:
   resolved "https://registry.npmjs.org/react-native-gradle-plugin/-/react-native-gradle-plugin-0.70.2.tgz"
   integrity sha512-k7d+CVh0fs/VntA2WaKD58cFB2rtiSLBHYlciH18ncaT4N/B3A4qOGv9pSCEHfQikELm6vAf98KMbE3c8KnH1A==
 
+react-native-linear-gradient@^2.6.2:
+  version "2.6.2"
+  resolved "https://registry.yarnpkg.com/react-native-linear-gradient/-/react-native-linear-gradient-2.6.2.tgz#56598a76832724b2afa7889747635b5c80948f38"
+  integrity sha512-Z8Xxvupsex+9BBFoSYS87bilNPWcRfRsGC0cpJk72Nxb5p2nEkGSBv73xZbEHnW2mUFvP+huYxrVvjZkr/gRjQ==
+
 react-native-radio-buttons-group@^2.2.11:
   version "2.2.11"
   resolved "https://registry.yarnpkg.com/react-native-radio-buttons-group/-/react-native-radio-buttons-group-2.2.11.tgz#204cc00ce7b95800fba80800fdf960d35efff81d"
