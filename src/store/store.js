@@ -59,9 +59,21 @@ const store = createStore({
     }),
 
     // Sound
+    midi: null,
+    setMidi: action((state, payload) => {
+        state.midi = payload
+    }),
     sound: true,
     setSound: action((state, payload) => {
         state.sound = payload
+        if(payload){
+            state.midi.play()
+        }else{
+            state.midi.stop()
+        }
     }),
+
+    
+
 });
 export default store;
