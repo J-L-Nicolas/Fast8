@@ -2,6 +2,7 @@ import React from 'react'
 import { StyleSheet, View, Text, Image, TouchableOpacity, BackHandler } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 import {useStoreActions, useStoreState} from 'easy-peasy'
+import Sound  from 'react-native-sound'
 
 // imp components
 import SwictLang from '../components/menu_components/SwictLang'
@@ -15,7 +16,25 @@ const Menu = () => {
     const lang = useStoreState((state) => state.stringLang)[IdLang];
     const getColors = useStoreState((state) => state.getColors);
     const changeColorsMode = useStoreActions((action) => action.changeColorsMode)
+    const setMidi = useStoreActions((action) => action.setMidi)
 
+    // init sound
+    // Enable playback in silence mode
+    Sound.setCategory('Playback');
+
+    let whoosh = new Sound('back_music.mp3', Sound.MAIN_BUNDLE, (error) => {
+      if (error) {
+        console.log('failed to load the sound', error);
+        return;
+      }
+    
+      // Play the sound sens store
+      whoosh.play();
+      whoosh.setVolume(0.5)
+      whoosh.setNumberOfLoops(-1)
+      setMidi(whoosh)
+    });
+    
     //styles
     const styles = StyleSheet.create(dataStyle(getColors))
     
