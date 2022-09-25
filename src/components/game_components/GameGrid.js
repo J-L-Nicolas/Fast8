@@ -1,5 +1,7 @@
-import React, {useEffect, useRef} from 'react'
+import React, {useRef} from 'react'
 import { StyleSheet, View, Animated, PanResponder } from 'react-native'
+import { useStoreState} from 'easy-peasy'
+import Colors from '../Colors'
 
 //data size
 const size = {
@@ -8,6 +10,9 @@ const size = {
 }
 
 const GameGrid = ({tableGame, changeTableGame}) => {
+
+    // init store
+    const colorMode = useStoreState((state) => state.colorMode);
 
     //init ref
     const layoutInfos = useRef(size)
@@ -130,7 +135,7 @@ const GameGrid = ({tableGame, changeTableGame}) => {
     })
         const boxInterpolationHidde =  colorSelectedHidde.interpolate({
         inputRange: [0, 1],
-        outputRange:["#ffffff00" , "#515ba1"]
+        outputRange:["#ffffff00" , Colors[colorMode].primary]
     })
 
     // render function
