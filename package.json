@@ -1,6 +1,10 @@
 {
   "name": "fast8",
+<<<<<<< HEAD
   "version": "0.6",
+=======
+  "version": "0.7",
+>>>>>>> develop
   "private": true,
   "scripts": {
     "android": "react-native run-android",
