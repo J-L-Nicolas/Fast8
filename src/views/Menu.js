@@ -54,10 +54,10 @@ const Menu = () => {
     }, []);
 
     useEffect(() => {
-      if (getsound && appEtat === "background"){
+      if (soundMidi.current !== null && getsound && appEtat === "background"){
         soundMidi.current.pause()
       }
-      if (getsound && appEtat === "active"){
+      if (soundMidi.current !== null && getsound && appEtat === "active"){
         console.log("open", getsound)
         soundMidi.current.play()
       }
