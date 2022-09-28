@@ -118,6 +118,9 @@ const dataStyle = (getcolor) => {
         color: getcolor.primaryFont
       },
       boxParam:{
+        padding: 15,
+        paddingRight: 25,
+        justifyContent: "space-between",
         width: "100%",
         marginTop: 10,
         borderWidth: 1,
@@ -125,6 +128,7 @@ const dataStyle = (getcolor) => {
         alignItems: "center",
         borderTopLeftRadius: 15,
         borderBottomRightRadius: 15,
+        flexDirection: "row",
       },
       titleParam:{
         color: getcolor.secondaryFont,
