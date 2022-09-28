@@ -17,7 +17,7 @@ const Infos = ({infos}) => {
             <View style={styles.oldList}>
                 {infos.oldMoves.length > 0 && <Text style={styles.titleOldList}>{lang.textOLMove}:</Text>}
                 {infos.oldMoves.map((move, index)=>
-                    <Text key={index}>➜ {move} - {move < 10 ? "★★★" : move < 20 ? "★★" : "★" } </Text>
+                    <Text key={index} style={styles.textOlder}>➜ {move} - {move < 10 ? "★★★" : move < 20 ? "★★" : "★" } </Text>
                 )}
             </View>
         </View>
@@ -52,5 +52,9 @@ const styles = StyleSheet.create({
         fontWeight:  'bold',
         fontSize: 15,
         textAlign: 'center',
+    },
+    textOlder:{
+        color: "#777",
     }
+
 })

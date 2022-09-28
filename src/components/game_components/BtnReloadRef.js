@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
     btnReloadRef: {
         height: 60,
         padding: 10,
-        backgroundColor: "#6c00d1bd",
+        backgroundColor: "#ffffffc2",
         borderRadius: 40,
     },
     imgReloadIcon: {
